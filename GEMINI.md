@@ -201,8 +201,8 @@ Update this section at the end of every session. Treat this as the source of tru
 - [x] Tailwind CSS configured in `vite.config.js` and `index.css`
 - [x] Inter font loaded in `index.html` (weights 300 and 400)
 - [x] `font-feature-settings: "ss01"` applied globally on `body` in `index.css`
-- [ ] React Router configured in `App.jsx`
-- [ ] `src/data/locations.js` populated
+- [x] React Router configured in `App.jsx`
+- [x] `src/data/locations.js` populated
 - [ ] Homepage (`/`) built
 - [ ] Play Hub (`/play`) built
 - [ ] How to Play (`/play/how-to-play`) built
