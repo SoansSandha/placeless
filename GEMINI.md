@@ -203,7 +203,7 @@ Update this section at the end of every session. Treat this as the source of tru
 - [x] `font-feature-settings: "ss01"` applied globally on `body` in `index.css`
 - [x] React Router configured in `App.jsx`
 - [x] `src/data/locations.js` populated
-- [ ] Homepage (`/`) built
+- [x] Homepage (`/`) built
 - [ ] Play Hub (`/play`) built
 - [ ] How to Play (`/play/how-to-play`) built
 - [ ] Room page (`/room/:code`) — Lobby state
