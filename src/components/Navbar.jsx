@@ -4,24 +4,23 @@ import { motion } from 'framer-motion';
 export function Navbar() {
   return (
     <motion.nav 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between max-w-[1200px] mx-auto w-full bg-white/70 backdrop-blur-[12px] border-b border-white/20 rounded-b-2xl shadow-sm"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="fixed top-4 left-4 right-4 z-50 px-8 py-4 flex items-center justify-between max-w-[1200px] mx-auto w-full bg-white/80 backdrop-blur-[16px] border border-white/40 rounded-[28px] shadow-xl"
     >
-      <Link to="/" className="text-[26px] font-light tracking-[-0.26px] text-[#0d253d]">
-        Placeless
+      <Link to="/" className="text-[24px] font-bold tracking-[-0.5px] text-[#0d253d]">
+        Placeless<span className="text-[#533afd]">.</span>
       </Link>
-      <div className="flex items-center gap-6">
-        <Link to="/play/how-to-play" className="text-sm font-normal text-[#273951] hover:text-[#533afd] transition-colors">
-          How to Play
+      <div className="flex items-center gap-8">
+        <Link to="/play/how-to-play" className="text-sm font-semibold text-[#273951] hover:text-[#533afd] transition-colors">
+          Rules
         </Link>
         <Link to="/play">
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="bg-[#533afd] text-white rounded-full px-6 py-2 text-sm font-normal cursor-pointer shadow-md hover:shadow-lg transition-shadow"
+            className="bg-[#533afd] text-white rounded-full px-6 py-2.5 text-sm font-bold cursor-pointer shadow-lg shadow-[#533afd]/20"
           >
             Play Now
           </motion.button>

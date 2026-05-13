@@ -66,53 +66,33 @@ src/
 | `{colors.hairline-input}` | `#a8c3de` | `border-[#a8c3de]` |
 | `{colors.ruby}` | `#ea2261` | `text-[#ea2261]` |
 
-### Border Radius
+### Border Radius (Increased for Playfulness)
 
 | Token | Value | Tailwind |
 |---|---|---|
-| `{rounded.xs}` | 4px | `rounded` |
-| `{rounded.sm}` | 6px | `rounded-[6px]` |
-| `{rounded.md}` | 8px | `rounded-lg` |
-| `{rounded.lg}` | 12px | `rounded-xl` |
-| `{rounded.xl}` | 16px | `rounded-2xl` |
+| `{rounded.xs}` | 6px | `rounded-[6px]` |
+| `{rounded.sm}` | 10px | `rounded-[10px]` |
+| `{rounded.md}` | 14px | `rounded-2xl` |
+| `{rounded.lg}` | 20px | `rounded-3xl` |
+| `{rounded.xl}` | 28px | `rounded-[28px]` |
 | `{rounded.pill}` | 9999px | `rounded-full` |
 
-### Spacing
+### Motion (Framer Motion)
 
-| Token | Value | Tailwind |
+| Token | Logic | Usage |
 |---|---|---|
-| `{spacing.xxs}` | 2px | `p-0.5` |
-| `{spacing.xs}` | 4px | `p-1` |
-| `{spacing.sm}` | 8px | `p-2` |
-| `{spacing.md}` | 12px | `p-3` |
-| `{spacing.lg}` | 16px | `p-4` |
-| `{spacing.xl}` | 24px | `p-6` |
-| `{spacing.xxl}` | 32px | `p-8` |
-| `{spacing.huge}` | 64px | `p-16` |
+| `{motion.bounce}` | `type: "spring", stiffness: 300, damping: 15` | Buttons, Hover states |
+| `{motion.smooth}` | `type: "tween", duration: 0.4, ease: "circOut"` | Page transitions, Reveals |
 
-### Typography
+### Typography (Inter)
 
-All display and heading text uses **Inter** (loaded from Google Fonts at weights 300 and 400). Do not attempt to load Sohne — it is proprietary. Inter at weight 300 with negative letter-spacing is the correct substitute.
-
-Apply `font-feature-settings: "ss01"` globally on the `body` element in `index.css`.
-Apply `font-feature-settings: "tnum"` per-element on any numeric or timer content.
-
-| Token | Size | Weight | Letter Spacing | Tailwind |
-|---|---|---|---|---|
-| `{typography.display-xxl}` | 56px | 300 | -1.4px | `text-[56px] font-light tracking-[-1.4px]` |
-| `{typography.display-xl}` | 48px | 300 | -0.96px | `text-[48px] font-light tracking-[-0.96px]` |
-| `{typography.display-lg}` | 32px | 300 | -0.64px | `text-[32px] font-light tracking-[-0.64px]` |
-| `{typography.display-md}` | 26px | 300 | -0.26px | `text-[26px] font-light tracking-[-0.26px]` |
-| `{typography.heading-lg}` | 22px | 300 | -0.22px | `text-[22px] font-light tracking-[-0.22px]` |
-| `{typography.heading-md}` | 20px | 300 | -0.2px | `text-[20px] font-light tracking-[-0.2px]` |
-| `{typography.heading-sm}` | 18px | 300 | 0 | `text-[18px] font-light` |
-| `{typography.body-lg}` | 16px | 300 | 0 | `text-base font-light` |
-| `{typography.body-md}` | 15px | 300 | 0 | `text-[15px] font-light` |
-| `{typography.button-md}` | 16px | 400 | 0 | `text-base font-normal` |
-| `{typography.button-sm}` | 14px | 400 | 0 | `text-sm font-normal` |
-| `{typography.caption}` | 13px | 400 | -0.39px | `text-[13px] font-normal tracking-[-0.39px]` |
-
-Never use default Tailwind color names (`indigo-500`, `blue-600`, etc.) for brand colors — always use the hex arbitrary values above.
+| Token | Size | Weight | Tailwind |
+|---|---|---|---|
+| `{typography.display-xxl}` | 56px | 400 | `text-[56px] font-normal tracking-[-1.4px]` |
+| `{typography.display-xl}` | 48px | 400 | `text-[48px] font-normal tracking-[-0.96px]` |
+| `{typography.display-lg}` | 32px | 400 | `text-[32px] font-normal tracking-[-0.64px]` |
+| `{typography.heading-md}` | 20px | 500 | `text-[20px] font-medium tracking-[-0.2px]` |
+| `{typography.body-lg}` | 16px | 400 | `text-base font-normal` |
 
 ---
 
@@ -130,10 +110,11 @@ These apply at all times. Do not violate them for any reason.
 - **Never refactor working code** unless explicitly instructed
 - **Never use inline styles** — Tailwind utility classes only
 - **Never use rounded-rectangle buttons** — always pill shape (`rounded-full` / `border-radius: 9999px`)
-- **Never bump display font weight above 300** — it breaks the brand
+- **Never use sharp corners** — always use the rounded tokens (min `rounded-2xl` for cards)
+- **Never use linear animations for UI triggers** — always use `motion.bounce` (spring) for buttons and transitions
 - **Never remove the gradient mesh from the homepage hero** — a bare canvas hero breaks the brand
 - **Never use default Tailwind color names for brand colors** — use hex arbitrary values as defined in the token translation table above
-- **Never load Sohne** — use Inter from Google Fonts at weights 300 and 400 only
+- **Never load Sohne** — use Inter from Google Fonts
 - **Never install a new dependency** without being explicitly asked
 
 ---
