@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
 import { FeatureCard } from '../components/FeatureCard';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,6 +33,8 @@ const itemVariants = {
 };
 
 export default function Home() {
+  useDocumentTitle('Placeless — Social Deduction Game');
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b0d22] selection:bg-[#b9b9f9] selection:text-[#533afd] overflow-x-hidden">
       <Navbar />

@@ -5,8 +5,10 @@ import { Footer } from '../components/Footer';
 import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
 import { useRoom } from '../hooks/useRoom';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function PlayHub() {
+  useDocumentTitle('Play · Placeless');
   const { createRoom, joinRoom, loading, error } = useRoom();
   const [createName, setCreateName] = useState('');
   const [joinName, setJoinName] = useState('');
