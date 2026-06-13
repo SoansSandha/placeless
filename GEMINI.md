@@ -164,33 +164,46 @@ Write clean, production-quality code at all times. These apply to every file you
 
 ## Current Status
 
-Update this section at the end of every session. Treat this as the source of truth for what is and isn't done.
+Update this section at the end of every session. Treat this as the source of truth for what is and isn't done. _Last updated: 2026-06-13._
 
+> **Built ≠ shipped.** Everything under "Built this session" is code-complete with lint + build green, but the game does **not** run until the SQL migrations are applied to Supabase (see "To ship / verify").
+
+### ✅ Done — scaffold, design, marketing + entry flow
 - [x] Vite + React project initialized
 - [x] `docs/` folder with requirements and hosting docs
 - [x] `DESIGN.md` design system in place
-- [x] Dependencies installed: `react-router-dom`, `@supabase/supabase-js`, `tailwindcss`
+- [x] Dependencies installed: `react-router-dom`, `@supabase/supabase-js`, `tailwindcss`, `framer-motion`
 - [x] Supabase project created and healthy
-- [x] All 4 tables created: `rooms`, `players`, `votes`, `events`
-- [x] RLS policies configured and Security Advisor clean
-- [x] Realtime enabled on all 4 tables
-- [x] Cleanup cron job scheduled (hourly via pg_cron)
-- [x] `.env` file populated with Supabase URL and anon key
-- [x] `src/lib/supabase.js` initialized
-- [x] `src/components/` and `src/pages/` folders created
-- [x] `GEMINI.md` written
-- [x] Tailwind CSS configured in `vite.config.js` and `index.css`
-- [x] Inter font loaded in `index.html` (weights 300 and 400)
-- [x] `font-feature-settings: "ss01"` applied globally on `body` in `index.css`
-- [x] React Router configured in `App.jsx`
-- [x] `src/data/locations.js` populated
+- [x] 4 tables created (`rooms`, `players`, `votes`, `events`), initial RLS, realtime, and hourly cleanup cron configured via the dashboard _(now superseded/extended by the committed migrations — see below)_
+- [x] `.env` populated with Supabase URL + anon key
+- [x] `src/lib/supabase.js` initialized (anon key only)
+- [x] Tailwind v4 configured in `vite.config.js` + `index.css`; Inter loaded (300/400); `ss01` global; `--text-display-*` / `--text-heading-md` type tokens added
+- [x] React Router configured in `App.jsx` (all 5 routes)
+- [x] `src/data/locations.js` populated (33 locations)
 - [x] Homepage (`/`) built
-- [ ] Play Hub (`/play`) built
-- [ ] How to Play (`/play/how-to-play`) built
-- [ ] Room page (`/room/:code`) — Lobby state
-- [ ] Room page — Role Reveal state
-- [ ] Room page — Playing state
-- [ ] Room page — Voting state
-- [ ] Room page — Results state
-- [ ] GitHub repo created and code pushed
-- [ ] Vercel connected to GitHub and deployed
+- [x] Play Hub (`/play`) built
+- [x] Join page (`/play/join`) built
+- [x] How to Play (`/play/how-to-play`) built
+
+### 🔨 Built this session — code complete, pending DB apply + playtest
+- [x] Anonymous identity (`src/lib/player.js`) + room create/join moved to server RPCs in `useRoom` (fixes the capacity race + duplicate-name gaps)
+- [x] `useGameRoom` hook — realtime subscribe→refetch, reconnect-on-mount, host auto-promotion, all game actions, subscription cleanup on unmount
+- [x] Room page (`/room/:code`) — Lobby state (roster, code share, host timer selector, start gate)
+- [x] Room page — Role Reveal state (private card, ready-up, host "begin now")
+- [x] Room page — Playing state (server-anchored timer, Accuse, spy "Guess Location")
+- [x] Room page — Voting state (live tally, one vote/round, can't-vote-self)
+- [x] Room page — Results state (spy + location reveal, winner, Play Again / Leave)
+- [x] SQL migrations committed to `supabase/migrations/` — canonical schema, RLS + column-grant secrecy (`is_spy`/`player_uuid`/`location` hidden), all `SECURITY DEFINER` RPCs, realtime publication + cleanup cron
+- [x] Adversarial review pass (SQL/RLS, hard rules, React/spec); real findings fixed
+- [x] Lint clean + production build green
+
+### ⏳ To ship / verify (the remaining work)
+- [ ] **Apply SQL migrations to Supabase** in order: `0001 → 0002 → 0003 → 0004`. `0002` rewrites RLS + column grants — review against the existing dashboard config first
+- [ ] **Verify realtime column secrecy** — a `players` subscription must NOT deliver `is_spy` (see `supabase/README.md`); this is the linchpin of the anti-cheat model
+- [ ] End-to-end multiplayer playtest: create → join → start → reveal → accuse → vote → results → play again (plus host-leaves promotion + refresh reconnect)
+- [ ] Commit + push `feat/play-and-join-pages`; open PR
+- [ ] Vercel connected to GitHub and deployed (set `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`)
+
+### 🧊 Backlog / optional
+- [ ] Code-split the bundle (~594 kB; framer-motion + supabase) toward the < 2s-to-interactive goal
+- [ ] Reconcile this file's Tech Stack (React 18 / RR v6) with what's installed (React 19 / RR 7)
