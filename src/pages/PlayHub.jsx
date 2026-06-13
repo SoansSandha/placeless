@@ -48,7 +48,7 @@ export default function PlayHub() {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-[#0b0d22] overflow-x-hidden flex flex-col">
       <Navbar />
       
       <main className="flex-grow pt-[160px] pb-[100px] px-6 relative flex flex-col items-center justify-center">
@@ -61,10 +61,10 @@ export default function PlayHub() {
           className="max-w-[1000px] w-full relative z-10"
         >
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h1 className="text-[48px] md:text-[64px] font-black tracking-[-2px] text-[#0d253d] mb-4">
+            <h1 className="text-[48px] md:text-[64px] font-black tracking-[-2px] text-[#0d253d] dark:text-[#eef1fb] mb-4">
               Ready to Play?
             </h1>
-            <p className="text-[20px] text-[#64748d] font-medium max-w-[600px] mx-auto">
+            <p className="text-[20px] text-[#64748d] dark:text-[#8b95b8] font-medium max-w-[600px] mx-auto">
               Choose your path. Start a new deception or join an existing table.
             </p>
           </motion.div>
@@ -73,15 +73,15 @@ export default function PlayHub() {
             {/* Create Room Card */}
             <motion.div 
               variants={itemVariants}
-              className="bg-[#f6f9fc] p-10 md:p-12 rounded-[32px] border-2 border-[#e3e8ee] hover:border-[#533afd] transition-colors duration-300 shadow-xl"
+              className="bg-[#f6f9fc] dark:bg-[#1c1e54] p-10 md:p-12 rounded-[32px] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] hover:border-[#533afd] dark:hover:border-[#665efd] transition-colors duration-300 shadow-xl"
             >
               <div className="w-14 h-14 rounded-2xl bg-[#533afd] flex items-center justify-center text-white mb-8 shadow-lg shadow-[#533afd]/20">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </div>
-              <h2 className="text-[32px] font-black tracking-[-1px] text-[#0d253d] mb-4">Create Room</h2>
-              <p className="text-[#64748d] mb-10 font-medium">Be the host. Pick the timer and lead the hunt for the spy.</p>
+              <h2 className="text-[32px] font-black tracking-[-1px] text-[#0d253d] dark:text-[#eef1fb] mb-4">Create Room</h2>
+              <p className="text-[#64748d] dark:text-[#8b95b8] mb-10 font-medium">Be the host. Pick the timer and lead the hunt for the spy.</p>
               
               <form onSubmit={handleCreate} className="space-y-4">
                 <div className="relative">
@@ -91,7 +91,7 @@ export default function PlayHub() {
                     value={createName}
                     onChange={(e) => setCreateName(e.target.value)}
                     maxLength={20}
-                    className="w-full px-6 py-4 rounded-full bg-white border-2 border-[#e3e8ee] focus:border-[#533afd] focus:outline-none text-[#0d253d] font-bold placeholder:text-[#64748d]/50 transition-all text-lg"
+                    className="w-full px-6 py-4 rounded-full bg-white dark:bg-[#14163a] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] focus:border-[#533afd] focus:outline-none text-[#0d253d] dark:text-[#eef1fb] font-bold placeholder:text-[#64748d]/50 dark:placeholder:text-[#8b95b8]/50 transition-all text-lg"
                   />
                 </div>
                 <Button 
@@ -108,15 +108,15 @@ export default function PlayHub() {
             {/* Join Room Card */}
             <motion.div 
               variants={itemVariants}
-              className="bg-[#f6f9fc] p-10 md:p-12 rounded-[32px] border-2 border-[#e3e8ee] hover:border-[#533afd] transition-colors duration-300 shadow-xl"
+              className="bg-[#f6f9fc] dark:bg-[#1c1e54] p-10 md:p-12 rounded-[32px] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] hover:border-[#533afd] dark:hover:border-[#665efd] transition-colors duration-300 shadow-xl"
             >
               <div className="w-14 h-14 rounded-2xl bg-[#533afd] flex items-center justify-center text-white mb-8 shadow-lg shadow-[#533afd]/20">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
               </div>
-              <h2 className="text-[32px] font-black tracking-[-1px] text-[#0d253d] mb-4">Join Room</h2>
-              <p className="text-[#64748d] mb-10 font-medium">Got a code? Enter it below to join your friends instantly.</p>
+              <h2 className="text-[32px] font-black tracking-[-1px] text-[#0d253d] dark:text-[#eef1fb] mb-4">Join Room</h2>
+              <p className="text-[#64748d] dark:text-[#8b95b8] mb-10 font-medium">Got a code? Enter it below to join your friends instantly.</p>
               
               <form onSubmit={handleJoin} className="space-y-4">
                 <input 
@@ -125,7 +125,7 @@ export default function PlayHub() {
                   value={joinName}
                   onChange={(e) => setJoinName(e.target.value)}
                   maxLength={20}
-                  className="w-full px-6 py-4 rounded-full bg-white border-2 border-[#e3e8ee] focus:border-[#533afd] focus:outline-none text-[#0d253d] font-bold placeholder:text-[#64748d]/50 transition-all text-lg"
+                  className="w-full px-6 py-4 rounded-full bg-white dark:bg-[#14163a] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] focus:border-[#533afd] focus:outline-none text-[#0d253d] dark:text-[#eef1fb] font-bold placeholder:text-[#64748d]/50 dark:placeholder:text-[#8b95b8]/50 transition-all text-lg"
                 />
                 <input 
                   type="text"
@@ -133,7 +133,7 @@ export default function PlayHub() {
                   value={roomCode}
                   onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
                   maxLength={4}
-                  className="w-full px-6 py-4 rounded-full bg-white border-2 border-[#e3e8ee] focus:border-[#533afd] focus:outline-none text-[#0d253d] font-bold placeholder:text-[#64748d]/50 transition-all text-lg tracking-[4px] uppercase"
+                  className="w-full px-6 py-4 rounded-full bg-white dark:bg-[#14163a] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] focus:border-[#533afd] focus:outline-none text-[#0d253d] dark:text-[#eef1fb] font-bold placeholder:text-[#64748d]/50 dark:placeholder:text-[#8b95b8]/50 transition-all text-lg tracking-[4px] uppercase"
                 />
                 <Button 
                   type="submit" 
