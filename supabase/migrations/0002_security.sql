@@ -27,13 +27,13 @@ create policy events_select  on public.events  for select using (true);
 -- Column-level secrecy --------------------------------------------------------
 -- players: hide is_spy and player_uuid from the client and from realtime payloads.
 revoke select on public.players from anon, authenticated;
-grant  select (id, room_code, username, is_host, is_ready, joined_at)
+grant  select (id, room_code, username, is_host, is_ready, score, wants_vote, joined_at)
        on public.players to anon, authenticated;
 
 -- rooms: hide the secret location. Everything else is safe to read.
 revoke select on public.rooms from anon, authenticated;
-grant  select (id, room_code, status, timer_duration, current_round, winner,
-               started_at, created_at, last_activity_at)
+grant  select (id, room_code, status, timer_duration, round_count, current_round, winner,
+               started_at, voting_started_at, created_at, last_activity_at)
        on public.rooms to anon, authenticated;
 
 -- votes & events carry no secrets
@@ -41,13 +41,19 @@ grant select on public.votes  to anon, authenticated;
 grant select on public.events to anon, authenticated;
 
 -- Convenience views for the client roster (no secret columns) -----------------
-create or replace view public.players_public as
-  select id, room_code, username, is_host, is_ready, joined_at
+-- Drop first: CREATE OR REPLACE can't change a view's column set, and an existing
+-- players_public / rooms_public (e.g. from the original dashboard setup) may have a
+-- different column list — that raises "cannot drop columns from view" (42P16).
+drop view if exists public.players_public;
+drop view if exists public.rooms_public;
+
+create view public.players_public as
+  select id, room_code, username, is_host, is_ready, score, wants_vote, joined_at
   from public.players;
 
-create or replace view public.rooms_public as
-  select id, room_code, status, timer_duration, current_round, winner,
-         started_at, created_at, last_activity_at
+create view public.rooms_public as
+  select id, room_code, status, timer_duration, round_count, current_round, winner,
+         started_at, voting_started_at, created_at, last_activity_at
   from public.rooms;
 
 -- run the views with the caller's privileges so RLS + column grants apply

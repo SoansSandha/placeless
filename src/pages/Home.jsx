@@ -33,7 +33,7 @@ const itemVariants = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white selection:bg-[#b9b9f9] selection:text-[#533afd] overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0b0d22] selection:bg-[#b9b9f9] selection:text-[#533afd] overflow-x-hidden">
       <Navbar />
       
       <main>
@@ -49,7 +49,7 @@ export default function Home() {
           >
             <motion.h1 
               variants={itemVariants}
-              className="text-[56px] md:text-[92px] font-black tracking-[-4px] text-[#0d253d] leading-[0.95] mb-10"
+              className="text-[56px] md:text-[92px] font-black tracking-[-4px] text-[#0d253d] dark:text-[#eef1fb] leading-[0.95] mb-10"
             >
               Play Spyfall, <br />
               <span className="text-[#533afd] inline-block hover:rotate-2 transition-transform cursor-default">anywhere.</span>
@@ -57,7 +57,7 @@ export default function Home() {
             
             <motion.p 
               variants={itemVariants}
-              className="text-[22px] md:text-[32px] font-medium tracking-[-0.5px] text-[#273951] mb-16 max-w-[750px] mx-auto leading-tight"
+              className="text-[22px] md:text-[32px] font-medium tracking-[-0.5px] text-[#273951] dark:text-[#c3cbe2] mb-16 max-w-[750px] mx-auto leading-tight"
             >
               A free browser-based social deduction game. No accounts, no installs, just pure deception.
             </motion.p>
@@ -86,23 +86,23 @@ export default function Home() {
             transition={{ delay: 1.5, duration: 1 }}
             className="mt-[120px] flex flex-wrap justify-center gap-x-12 gap-y-8 relative z-10"
           >
-            <div className="bg-[#f6f9fc] px-8 py-4 rounded-2xl border border-[#e3e8ee] flex flex-col items-center gap-1 shadow-sm">
+            <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] px-8 py-4 rounded-2xl border border-[#e3e8ee] dark:border-[#2a2d5c] flex flex-col items-center gap-1 shadow-sm">
               <span className="text-[24px] font-bold text-[#533afd]">3–10</span>
-              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d]">Players</span>
+              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d] dark:text-[#8b95b8]">Players</span>
             </div>
-            <div className="bg-[#f6f9fc] px-8 py-4 rounded-2xl border border-[#e3e8ee] flex flex-col items-center gap-1 shadow-sm">
+            <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] px-8 py-4 rounded-2xl border border-[#e3e8ee] dark:border-[#2a2d5c] flex flex-col items-center gap-1 shadow-sm">
               <span className="text-[24px] font-bold text-[#533afd]">3–15</span>
-              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d]">Min Rounds</span>
+              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d] dark:text-[#8b95b8]">Min Rounds</span>
             </div>
-            <div className="bg-[#f6f9fc] px-8 py-4 rounded-2xl border border-[#e3e8ee] flex flex-col items-center gap-1 shadow-sm">
+            <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] px-8 py-4 rounded-2xl border border-[#e3e8ee] dark:border-[#2a2d5c] flex flex-col items-center gap-1 shadow-sm">
               <span className="text-[24px] font-bold text-[#533afd]">30+</span>
-              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d]">Locations</span>
+              <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d] dark:text-[#8b95b8]">Locations</span>
             </div>
           </motion.div>
         </section>
 
         {/* How to Play Section */}
-        <section className="bg-[#f6f9fc] py-40 px-6 relative border-y border-[#e3e8ee]">
+        <section className="bg-[#f6f9fc] dark:bg-[#1c1e54] py-40 px-6 relative border-y border-[#e3e8ee] dark:border-[#2a2d5c]">
           <div className="max-w-[1300px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -111,8 +111,8 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="text-center mb-20"
             >
-              <h2 className="text-[48px] md:text-[64px] font-black tracking-[-2px] text-[#0d253d] mb-6">How to Play</h2>
-              <p className="text-[20px] text-[#64748d] max-w-[600px] mx-auto font-medium">Master the art of deception and deduction in four simple steps.</p>
+              <h2 className="text-[48px] md:text-[64px] font-black tracking-[-2px] text-[#0d253d] dark:text-[#eef1fb] mb-6">How to Play</h2>
+              <p className="text-[20px] text-[#64748d] dark:text-[#8b95b8] max-w-[600px] mx-auto font-medium">Master the art of deception and deduction in four simple steps.</p>
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -145,7 +145,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-40 px-6 bg-white overflow-hidden">
+        <section className="py-40 px-6 bg-white dark:bg-[#14163a] overflow-hidden">
           <div className="max-w-[1200px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
@@ -171,9 +171,9 @@ export default function Home() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: "spring", stiffness: 200, damping: 20, delay: i * 0.1 }}
-                  className="flex flex-col gap-8 bg-[#f6f9fc] p-10 rounded-[32px] border border-[#e3e8ee] hover:shadow-xl transition-shadow"
+                  className="flex flex-col gap-8 bg-[#f6f9fc] dark:bg-[#1c1e54] p-10 rounded-[32px] border border-[#e3e8ee] dark:border-[#2a2d5c] hover:shadow-xl transition-shadow"
                 >
-                  <p className="text-[20px] font-medium text-[#0d253d] italic leading-tight relative">
+                  <p className="text-[20px] font-medium text-[#0d253d] dark:text-[#eef1fb] italic leading-tight relative">
                     <span className="text-[#533afd] text-6xl absolute -top-8 -left-6 opacity-10">"</span>
                     {t.quote}
                   </p>
@@ -182,7 +182,7 @@ export default function Home() {
                       {t.author[0]}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[16px] font-bold text-[#0d253d]">{t.author}</span>
+                      <span className="text-[16px] font-bold text-[#0d253d] dark:text-[#eef1fb]">{t.author}</span>
                       <span className="text-[12px] font-bold uppercase tracking-widest text-[#533afd]">{t.role}</span>
                     </div>
                   </div>

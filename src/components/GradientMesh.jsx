@@ -16,7 +16,7 @@ export function GradientMesh() {
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 bg-white">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 bg-white dark:bg-[#0b0d22]">
       {/* Top Left - Cream */}
       <motion.div 
         animate={drift.animate} 
