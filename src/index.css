@@ -39,6 +39,32 @@
 
   /* Typography Base */
   --font-inter: "Inter", system-ui, sans-serif;
+
+  /* Display + heading type tokens (playful scale from GEMINI.md) */
+  --text-display-xxl: 3.5rem;   /* 56px */
+  --text-display-xxl--line-height: 1.05;
+  --text-display-xxl--letter-spacing: -0.0875rem; /* -1.4px */
+  --text-display-xxl--font-weight: 400;
+
+  --text-display-xl: 3rem;      /* 48px */
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: -0.06rem;    /* -0.96px */
+  --text-display-xl--font-weight: 400;
+
+  --text-display-lg: 2rem;      /* 32px */
+  --text-display-lg--line-height: 1.15;
+  --text-display-lg--letter-spacing: -0.04rem;    /* -0.64px */
+  --text-display-lg--font-weight: 400;
+
+  --text-display-md: 1.625rem;  /* 26px */
+  --text-display-md--line-height: 1.2;
+  --text-display-md--letter-spacing: -0.02rem;
+  --text-display-md--font-weight: 400;
+
+  --text-heading-md: 1.25rem;   /* 20px */
+  --text-heading-md--line-height: 1.4;
+  --text-heading-md--letter-spacing: -0.0125rem;  /* -0.2px */
+  --text-heading-md--font-weight: 500;
 }
 
 @layer base {
