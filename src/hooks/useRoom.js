@@ -3,61 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { getPlayerId } from '../lib/player';
 
+// Room creation + joining. The inserts happen inside SECURITY DEFINER RPCs
+// (create_room / join_room) so unique room codes, the 10-player capacity check,
+// and duplicate-name protection are enforced atomically on the server — the
+// previous client-side count-then-insert was open to a race at capacity.
 export function useRoom() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Helper to generate a unique 4-character room code
-  const generateRoomCode = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 4; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  };
-
   const createRoom = async (username) => {
     setLoading(true);
     setError(null);
-    
     try {
-      const playerUuid = getPlayerId();
-      let roomCode = generateRoomCode();
-      
-      // 1. Create the room
-      const { data: room, error: roomError } = await supabase
-        .from('rooms')
-        .insert([{ 
-          room_code: roomCode, 
-          status: 'lobby',
-          last_activity_at: new Date().toISOString()
-        }])
-        .select()
-        .single();
-
-      if (roomError) {
-        // Handle collision (rare for 4 chars but possible)
-        if (roomError.code === '23505') {
-          return createRoom(username); // Retry once
-        }
-        throw roomError;
+      const name = username.trim();
+      if (name.length < 2 || name.length > 20) {
+        throw new Error('Name must be 2 to 20 characters');
       }
-
-      // 2. Add the host player
-      const { error: playerError } = await supabase
-        .from('players')
-        .insert([{
-          player_uuid: playerUuid,
-          room_code: roomCode,
-          username,
-          is_host: true
-        }]);
-
-      if (playerError) throw playerError;
-
-      navigate(`/room/${roomCode}`);
+      const { data, error: rpcError } = await supabase.rpc('create_room', {
+        p_player_uuid: getPlayerId(),
+        p_username: name,
+      });
+      if (rpcError) throw rpcError;
+      navigate(`/room/${data}`);
     } catch (err) {
       console.error('Error creating room:', err);
       setError(err.message || 'Failed to create room');
@@ -69,59 +37,22 @@ export function useRoom() {
   const joinRoom = async (username, roomCode) => {
     setLoading(true);
     setError(null);
-    const formattedCode = roomCode.toUpperCase().trim();
-
     try {
-      const playerUuid = getPlayerId();
-
-      // 1. Validate room
-      const { data: room, error: roomError } = await supabase
-        .from('rooms')
-        .select('status')
-        .eq('room_code', formattedCode)
-        .single();
-
-      if (roomError || !room) {
-        throw new Error('Room not found');
+      const name = username.trim();
+      const code = roomCode.toUpperCase().trim();
+      if (name.length < 2 || name.length > 20) {
+        throw new Error('Name must be 2 to 20 characters');
       }
-
-      if (room.status !== 'lobby') {
-        throw new Error('Game already in progress');
+      if (code.length !== 4) {
+        throw new Error('Room code must be 4 characters');
       }
-
-      // 2. Check player count
-      const { count, error: countError } = await supabase
-        .from('players')
-        .select('*', { count: 'exact', head: true })
-        .eq('room_code', formattedCode);
-
-      if (countError) throw countError;
-      if (count >= 10) throw new Error('Room is full');
-
-      // 3. Add player
-      const { error: playerError } = await supabase
-        .from('players')
-        .insert([{
-          player_uuid: playerUuid,
-          room_code: formattedCode,
-          username,
-          is_host: false
-        }]);
-
-      if (playerError) {
-        if (playerError.code === '23505') {
-          throw new Error('You are already in this room');
-        }
-        throw playerError;
-      }
-
-      // 4. Update room activity
-      await supabase
-        .from('rooms')
-        .update({ last_activity_at: new Date().toISOString() })
-        .eq('room_code', formattedCode);
-
-      navigate(`/room/${formattedCode}`);
+      const { data, error: rpcError } = await supabase.rpc('join_room', {
+        p_player_uuid: getPlayerId(),
+        p_room_code: code,
+        p_username: name,
+      });
+      if (rpcError) throw rpcError;
+      navigate(`/room/${data}`);
     } catch (err) {
       console.error('Error joining room:', err);
       setError(err.message || 'Failed to join room');
