@@ -4,6 +4,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const STEPS = [
   {
@@ -36,6 +37,8 @@ const WIN_CONDITIONS = [
 ];
 
 export default function HowToPlay() {
+  useDocumentTitle('How to Play · Placeless');
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b0d22] overflow-x-hidden flex flex-col">
       <Navbar />

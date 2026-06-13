@@ -6,8 +6,10 @@ import { Footer } from '../components/Footer';
 import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
 import { useRoom } from '../hooks/useRoom';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function JoinRoom() {
+  useDocumentTitle('Join a Room · Placeless');
   const { joinRoom, loading, error } = useRoom();
   const [searchParams] = useSearchParams();
   const [username, setUsername] = useState('');
