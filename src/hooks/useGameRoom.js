@@ -9,8 +9,9 @@ import { getPlayerId } from '../lib/player';
  * secret data). Handles reconnect-on-mount and automatic host promotion, and
  * exposes every game action as a thin wrapper over a SECURITY DEFINER RPC.
  *
- * Derived `phase`: lobby → reveal (role shown, clock not started) → playing →
- * voting → ended. `started_at` is what flips reveal to the main game.
+ * Derived `phase` mirrors rooms.status: lobby → playing → voting → ended. The
+ * round starts immediately (no separate reveal step); `current_round` /
+ * `round_count` drive the multi-round flow.
  */
 export function useGameRoom(code) {
   const roomCode = (code || '').toUpperCase();
@@ -25,6 +26,7 @@ export function useGameRoom(code) {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [actionError, setActionError] = useState(null);
+  const [clockOffset, setClockOffset] = useState(0); // serverNow - clientNow, ms
 
   // --- fetchers (RLS + column grants keep secrets out of these results) ------
   const fetchRoom = useCallback(async () => {
@@ -75,8 +77,10 @@ export function useGameRoom(code) {
       const mine = await fetchMe();
       if (!active) return;
       if (!mine) {
-        // Our UUID isn't seated in this room (expired, removed, or wrong device).
-        navigate('/play', { replace: true });
+        // We're not seated in this room yet — almost always someone who opened a
+        // shared link. Send them to Join with the code prefilled so they only
+        // need to add a name (also covers expired/removed/wrong-device cases).
+        navigate(`/play/join?code=${roomCode}`, { replace: true });
         return;
       }
       await fetchPlayers();
@@ -112,6 +116,17 @@ export function useGameRoom(code) {
     return () => { supabase.removeChannel(channel); };
   }, [roomCode, fetchRoom, fetchMe, fetchPlayers, fetchVotes, fetchResults]);
 
+  // --- clock sync: learn the server's clock once so the countdown can correct for
+  // a skewed local clock (otherwise a fast client sits stuck at 00:00) -----------
+  useEffect(() => {
+    let active = true;
+    supabase.rpc('server_time').then(({ data, error }) => {
+      if (error) { console.error('server_time', error); return; }
+      if (active && data) setClockOffset(new Date(data).getTime() - Date.now());
+    });
+    return () => { active = false; };
+  }, []);
+
   // --- host promotion: if the room has no host, the eldest player self-promotes
   useEffect(() => {
     if (!players.length || !me) return;
@@ -136,35 +151,48 @@ export function useGameRoom(code) {
   }, [playerUuid, roomCode]);
 
   const setTimer   = useCallback((minutes) => call('set_timer', { p_minutes: minutes }), [call]);
+  const setRounds  = useCallback((count) => call('set_rounds', { p_count: count }), [call]);
   const startGame  = useCallback(() => call('start_game'), [call]);
-  const setReady   = useCallback(() => call('set_ready'), [call]);
-  const beginRound = useCallback(() => call('begin_round'), [call]);
-  const accuse     = useCallback(() => call('accuse'), [call]);
+  const nextRound  = useCallback(() => call('next_round'), [call]);
+  const callVote   = useCallback(() => call('call_vote'), [call]);
+  const promoteToHost = useCallback((targetId) => call('transfer_host', { p_target_id: targetId }), [call]);
   const castVote   = useCallback((accusedId) => call('cast_vote', { p_accused_id: accusedId }), [call]);
   const spyGuess   = useCallback((location) => call('spy_guess', { p_location: location }), [call]);
   const playAgain  = useCallback(() => call('play_again'), [call]);
 
-  // expire_timer takes no player param; safe to call from any client (idempotent)
+  // expire_timer takes no player param; safe to call from any client (idempotent).
+  // Server-time-gated, so it only flips playing -> voting once the round clock has
+  // truly elapsed. Log failures so a missing/denied RPC never fails silently.
   const expireTimer = useCallback(() => {
-    supabase.rpc('expire_timer', { p_room_code: roomCode });
+    supabase.rpc('expire_timer', { p_room_code: roomCode }).then(({ error }) => {
+      if (error) console.error('expire_timer', error);
+    });
   }, [roomCode]);
+
+  // vote timer ran out — any client may call this on its local countdown; the
+  // server only resolves once the 5-minute window has truly elapsed, so this
+  // cannot be used to end a vote early.
+  const expireVote = useCallback(() => {
+    supabase.rpc('expire_vote', { p_room_code: roomCode }).then(({ error }) => {
+      if (error) console.error('expire_vote', error);
+    });
+  }, [roomCode]);
+
+  // host force-resolves the vote (e.g. an AFK player) — host check is server-side
+  const skipVote = useCallback(() => call('skip_vote'), [call]);
 
   const leaveRoom = useCallback(async () => {
     await supabase.rpc('leave_room', { p_player_uuid: playerUuid, p_room_code: roomCode });
     navigate('/play');
   }, [playerUuid, roomCode, navigate]);
 
-  // derived phase
-  let phase = null;
-  if (room) {
-    if (room.status === 'playing') phase = room.started_at ? 'playing' : 'reveal';
-    else phase = room.status; // lobby | voting | ended
-  }
+  // derived phase — the round starts immediately, so there's no separate reveal step
+  const phase = room ? room.status : null; // lobby | playing | voting | ended
 
   return {
     roomCode, room, players, me, votes, results, phase,
-    loading, notFound, actionError,
-    setTimer, startGame, setReady, beginRound, accuse, castVote,
-    spyGuess, expireTimer, playAgain, leaveRoom,
+    loading, notFound, actionError, clockOffset,
+    setTimer, setRounds, startGame, nextRound, callVote, promoteToHost, castVote,
+    spyGuess, expireTimer, expireVote, skipVote, playAgain, leaveRoom,
   };
 }

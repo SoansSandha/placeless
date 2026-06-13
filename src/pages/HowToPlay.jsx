@@ -37,7 +37,7 @@ const WIN_CONDITIONS = [
 
 export default function HowToPlay() {
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-[#0b0d22] overflow-x-hidden flex flex-col">
       <Navbar />
 
       <main className="flex-grow pt-[160px] pb-[100px] px-6 relative">
@@ -50,10 +50,10 @@ export default function HowToPlay() {
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
             className="text-center mb-16"
           >
-            <h1 className="text-[48px] md:text-[56px] font-black tracking-[-2px] text-[#0d253d] mb-4">
+            <h1 className="text-[48px] md:text-[56px] font-black tracking-[-2px] text-[#0d253d] dark:text-[#eef1fb] mb-4">
               How to Play
             </h1>
-            <p className="text-[20px] text-[#64748d] font-medium max-w-[560px] mx-auto">
+            <p className="text-[20px] text-[#64748d] dark:text-[#8b95b8] font-medium max-w-[560px] mx-auto">
               Placeless is a social bluffing game for 3–10 players. One spy, one
               location, and a lot of careful questions. You&apos;ll need a voice or video call
               going alongside the app.
@@ -68,14 +68,14 @@ export default function HowToPlay() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ type: 'spring', stiffness: 260, damping: 20, delay: i * 0.05 }}
-                className="flex gap-5 bg-[#f6f9fc] p-8 rounded-[32px] border-2 border-[#e3e8ee]"
+                className="flex gap-5 bg-[#f6f9fc] dark:bg-[#1c1e54] p-8 rounded-[32px] border-2 border-[#e3e8ee] dark:border-[#2a2d5c]"
               >
                 <div className="w-12 h-12 shrink-0 rounded-full bg-[#533afd] text-white flex items-center justify-center text-lg font-black">
                   {s.step}
                 </div>
                 <div>
-                  <h2 className="text-[22px] font-black tracking-[-0.5px] text-[#0d253d] mb-2">{s.title}</h2>
-                  <p className="text-[#64748d] font-medium leading-relaxed">{s.body}</p>
+                  <h2 className="text-[22px] font-black tracking-[-0.5px] text-[#0d253d] dark:text-[#eef1fb] mb-2">{s.title}</h2>
+                  <p className="text-[#64748d] dark:text-[#8b95b8] font-medium leading-relaxed">{s.body}</p>
                 </div>
               </motion.div>
             ))}
@@ -86,16 +86,16 @@ export default function HowToPlay() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className="bg-white p-8 rounded-[32px] border-2 border-[#e3e8ee] shadow-lg mb-16"
+            className="bg-white dark:bg-[#14163a] p-8 rounded-[32px] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] shadow-lg mb-16"
           >
-            <h2 className="text-[28px] font-black tracking-[-1px] text-[#0d253d] mb-6">Who wins?</h2>
+            <h2 className="text-[28px] font-black tracking-[-1px] text-[#0d253d] dark:text-[#eef1fb] mb-6">Who wins?</h2>
             <ul className="space-y-3">
               {WIN_CONDITIONS.map(([condition, winner]) => (
                 <li
                   key={condition}
-                  className="flex items-center justify-between gap-4 py-3 border-b border-[#e3e8ee] last:border-0"
+                  className="flex items-center justify-between gap-4 py-3 border-b border-[#e3e8ee] dark:border-[#2a2d5c] last:border-0"
                 >
-                  <span className="text-[#273951] font-medium">{condition}</span>
+                  <span className="text-[#273951] dark:text-[#c3cbe2] font-medium">{condition}</span>
                   <span
                     className={`shrink-0 text-xs font-bold uppercase tracking-[1px] px-3 py-1.5 rounded-full ${
                       winner === 'Spy wins' ? 'bg-[#1c1e54] text-white' : 'bg-[#b9b9f9] text-[#2e2b8c]'

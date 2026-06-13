@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Manual (class-based) dark mode: `dark:` applies whenever a `.dark` ancestor is
+   present. useTheme + the no-flash script in index.html toggle `.dark` on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Colors from GEMINI.md */
   --color-primary: #533afd;
@@ -73,6 +77,16 @@
     font-feature-settings: "ss01";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Dark theme base. The `.dark` class is set on <html> (see index.html +
+     useTheme); `color-scheme` keeps native UI — scrollbars, form controls — in
+     sync. Page background mirrors the dark canvas so nothing flashes white. */
+  :root { color-scheme: light; }
+  .dark { color-scheme: dark; }
+  .dark body {
+    background-color: #0b0d22;
+    color: #eef1fb;
   }
 
   /* Numeric/Timer content fallback */
