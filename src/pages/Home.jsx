@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
 import { FeatureCard } from '../components/FeatureCard';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,6 +33,8 @@ const itemVariants = {
 };
 
 export default function Home() {
+  useDocumentTitle('Placeless — Social Deduction Game');
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b0d22] selection:bg-[#b9b9f9] selection:text-[#533afd] overflow-x-hidden">
       <Navbar />
@@ -51,7 +54,7 @@ export default function Home() {
               variants={itemVariants}
               className="text-[56px] md:text-[92px] font-black tracking-[-4px] text-[#0d253d] dark:text-[#eef1fb] leading-[0.95] mb-10"
             >
-              Play Spyfall, <br />
+              Play Placeless, <br />
               <span className="text-[#533afd] inline-block hover:rotate-2 transition-transform cursor-default">anywhere.</span>
             </motion.h1>
             
@@ -140,54 +143,6 @@ export default function Home() {
                 title="Win" 
                 description="Vote correctly to catch the Spy, or guess the location if you are the Spy!" 
               />
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-40 px-6 bg-white dark:bg-[#14163a] overflow-hidden">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {[
-                {
-                  quote: "The absolute best way to lose friends and realize you're a terrible liar.",
-                  author: "Alex",
-                  role: "The Spy"
-                },
-                {
-                  quote: "Finally, a browser version that doesn't feel like a legacy app. Smooth as butter.",
-                  author: "Sarah",
-                  role: "Loyal Resident"
-                },
-                {
-                  quote: "Simple, clean, and dangerously addictive. The bounciness makes it so fun to use.",
-                  author: "Jordan",
-                  role: "Frequent Accuser"
-                }
-              ].map((t, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", stiffness: 200, damping: 20, delay: i * 0.1 }}
-                  className="flex flex-col gap-8 bg-[#f6f9fc] dark:bg-[#1c1e54] p-10 rounded-[32px] border border-[#e3e8ee] dark:border-[#2a2d5c] hover:shadow-xl transition-shadow"
-                >
-                  <p className="text-[20px] font-medium text-[#0d253d] dark:text-[#eef1fb] italic leading-tight relative">
-                    <span className="text-[#533afd] text-6xl absolute -top-8 -left-6 opacity-10">"</span>
-                    {t.quote}
-                  </p>
-                  <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-2xl bg-[#533afd] flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-[#533afd]/20">
-                      {t.author[0]}
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[16px] font-bold text-[#0d253d] dark:text-[#eef1fb]">{t.author}</span>
-                      <span className="text-[12px] font-bold uppercase tracking-widest text-[#533afd]">{t.role}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
             </div>
           </div>
         </section>

@@ -4,6 +4,8 @@ import { GradientMesh } from '../components/GradientMesh';
 import { Button } from '../components/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { useGameRoom } from '../hooks/useGameRoom';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import logo from '../assets/logo.svg';
 import { Lobby } from '../components/room/Lobby';
 import { Playing } from '../components/room/Playing';
 import { Voting } from '../components/room/Voting';
@@ -13,6 +15,8 @@ export default function GameRoom() {
   const { code } = useParams();
   const game = useGameRoom(code);
   const { room, me, phase, loading, actionError, leaveRoom } = game;
+
+  useDocumentTitle(code ? `Room ${code.toUpperCase()} · Placeless` : 'Room · Placeless');
 
   const closed = !loading && !room; // not found, expired, or every player left
 
@@ -25,8 +29,9 @@ export default function GameRoom() {
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         className="fixed top-4 left-4 right-4 z-50 px-8 py-4 flex items-center justify-between max-w-[1200px] mx-auto w-full bg-white/80 dark:bg-[#14163a]/80 backdrop-blur-[16px] border border-white/40 dark:border-white/10 rounded-[28px] shadow-xl"
       >
-        <Link to="/" className="text-[24px] font-bold tracking-[-0.5px] text-[#0d253d] dark:text-[#eef1fb]">
-          Placeless<span className="text-[#533afd]">.</span>
+        <Link to="/" className="flex items-center gap-2 text-[24px] font-bold tracking-[-0.5px] text-[#0d253d] dark:text-[#eef1fb]">
+          <img src={logo} alt="" className="h-8 w-8 shrink-0" />
+          <span>Placeless<span className="text-[#533afd]">.</span></span>
         </Link>
         <div className="flex items-center gap-4">
           {room && me && (
