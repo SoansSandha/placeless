@@ -5,6 +5,8 @@ import PlayHub from './pages/PlayHub';
 import JoinRoom from './pages/JoinRoom';
 import HowToPlay from './pages/HowToPlay';
 import GameRoom from './pages/GameRoom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
         <Route path="/play/how-to-play" element={<HowToPlay />} />
         <Route path="/room/:code" element={<GameRoom />} />
       </Routes>
+      {/* Vercel Web Analytics + Speed Insights — invisible, only report on Vercel */}
+      <Analytics />
+      <SpeedInsights />
     </BrowserRouter>
   );
 }
