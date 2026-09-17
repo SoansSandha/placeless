@@ -19,7 +19,7 @@ rounds of pointed questions, the group tries to expose the Spy — while the Spy
 blend in and deduce the location. It's a party game of bluffing and deduction, playable
 over any voice or video call, straight from the browser.
 
-- **3–10 players** per room
+- **3–15 players** per room
 - **1–10 rounds** per game, with per-player **scoring** and final standings
 - **~33 locations**, one secret role per round
 - **Round timer** (3–15 min) that rolls straight into a vote when it expires

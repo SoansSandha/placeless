@@ -83,7 +83,7 @@ begin
   if v_status <> 'lobby' then raise exception 'Game already in progress'; end if;
 
   select count(*) into v_count from public.players where room_code = v_code;
-  if v_count >= 10 then raise exception 'This room is full'; end if;
+  if v_count >= 15 then raise exception 'This room is full'; end if;
 
   begin
     insert into public.players (player_uuid, room_code, username, is_host)

@@ -90,7 +90,7 @@ export default function Home() {
             className="mt-[120px] flex flex-wrap justify-center gap-x-12 gap-y-8 relative z-10"
           >
             <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] px-8 py-4 rounded-2xl border border-[#e3e8ee] dark:border-[#2a2d5c] flex flex-col items-center gap-1 shadow-sm">
-              <span className="text-[24px] font-bold text-[#533afd]">3–10</span>
+              <span className="text-[24px] font-bold text-[#533afd]">3–15</span>
               <span className="text-[12px] uppercase tracking-widest font-bold text-[#64748d] dark:text-[#8b95b8]">Players</span>
             </div>
             <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] px-8 py-4 rounded-2xl border border-[#e3e8ee] dark:border-[#2a2d5c] flex flex-col items-center gap-1 shadow-sm">
