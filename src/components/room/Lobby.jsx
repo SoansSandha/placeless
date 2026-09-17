@@ -78,7 +78,7 @@ export function Lobby({ game }) {
       <div className="bg-[#f6f9fc] dark:bg-[#1c1e54] p-8 rounded-[32px] border-2 border-[#e3e8ee] dark:border-[#2a2d5c] shadow-xl">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-[24px] font-black tracking-[-0.5px] text-[#0d253d] dark:text-[#eef1fb]">Players</h2>
-          <span className="tnum text-sm font-bold text-[#64748d] dark:text-[#8b95b8]">{players.length} / 10</span>
+          <span className="tnum text-sm font-bold text-[#64748d] dark:text-[#8b95b8]">{players.length} / 15</span>
         </div>
 
         <PlayerList players={players} meId={me?.id} onPromote={isHost ? promoteToHost : undefined} />

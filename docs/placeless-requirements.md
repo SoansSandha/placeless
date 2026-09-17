@@ -167,7 +167,7 @@ Space Station, Pirate Ship, Hospital, Casino, Beach, Police Station, School, Sup
 
 ### Player Count
 - Minimum **3 players** to start
-- Maximum **10 players** per room
+- Maximum **15 players** per room
 - Attempting to join a full room returns an error: "This room is full"
 - Attempting to join a room mid-game returns an error: "Game already in progress"
 
@@ -339,7 +339,7 @@ If the host disconnects or leaves the room:
 ### Homepage `/`
 - Navbar: logo left, "How to Play" link right
 - Hero: headline, subheadline, "Play Now" button + "Join Room" button (both → `/play`)
-- Features strip: 3–10 Players / 3–15 Min Rounds / 30+ Locations
+- Features strip: 3–15 Players / 3–15 Min Rounds / 30+ Locations
 - How to Play: 4-step visual breakdown
 - Testimonials section (static)
 - Footer: How to Play, GitHub repo link

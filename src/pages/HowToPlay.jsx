@@ -57,7 +57,7 @@ export default function HowToPlay() {
               How to Play
             </h1>
             <p className="text-[20px] text-[#64748d] dark:text-[#8b95b8] font-medium max-w-[560px] mx-auto">
-              Placeless is a social bluffing game for 3–10 players. One spy, one
+              Placeless is a social bluffing game for 3–15 players. One spy, one
               location, and a lot of careful questions. You&apos;ll need a voice or video call
               going alongside the app.
             </p>
