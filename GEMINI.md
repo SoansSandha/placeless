@@ -198,7 +198,8 @@ Update this section at the end of every session. Treat this as the source of tru
 - [x] Lint clean + production build green
 
 ### ⏳ To ship / verify (the remaining work)
-- [ ] **Apply SQL migrations to Supabase** in order: `0001 → 0002 → 0003 → 0004`. `0002` rewrites RLS + column grants — review against the existing dashboard config first
+- [x] **Applied `0005_clear_votes_on_new_game.sql` to the live project** (2026-09-16) — fixes the vote-lock bug (a previous game's votes were read as the new game's, disabling every player's vote button so the host had to skip). Also cleans up rows already on file, which unblocks any room stuck on the voting screen
+- [ ] **Apply SQL migrations to Supabase** in order: `0001 → 0002 → 0003 → 0004 → 0005`. `0002` rewrites RLS + column grants — review against the existing dashboard config first
 - [ ] **Verify realtime column secrecy** — a `players` subscription must NOT deliver `is_spy` (see `supabase/README.md`); this is the linchpin of the anti-cheat model
 - [ ] End-to-end multiplayer playtest: create → join → start → reveal → accuse → vote → results → play again (plus host-leaves promotion + refresh reconnect)
 - [ ] Commit + push `feat/play-and-join-pages`; open PR

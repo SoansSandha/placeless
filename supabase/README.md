@@ -12,6 +12,7 @@ extend it. They are written to be **idempotent / safe to re-run**.
 | `migrations/0002_security.sql` | RLS policies + **column-level grants** that hide `is_spy`, `player_uuid`, and `location` from the client; the `players_public` / `rooms_public` views. |
 | `migrations/0003_functions.sql` | All game mutations as `SECURITY DEFINER` RPCs (create/join, start, ready, accuse, vote, spy guess, timer expiry, host promotion, play again, leave) + the private `get_my_player` / `get_results` reads. |
 | `migrations/0004_realtime_cron.sql` | Adds tables to the `supabase_realtime` publication and schedules the hourly cleanup job. |
+| `migrations/0005_clear_votes_on_new_game.sql` | **Bugfix.** Clears a room's `votes` whenever a game resets to round 1 (`start_game` / `play_again`), plus a one-time cleanup of rows already on file. Without it the previous game's votes were read as the new game's — locking every player out of the vote. |
 
 ## How to apply
 
@@ -21,6 +22,7 @@ will *replace* the read policies and re-grant column privileges to match this ca
 
 ```
 0001_schema.sql  →  0002_security.sql  →  0003_functions.sql  →  0004_realtime_cron.sql
+  →  0005_clear_votes_on_new_game.sql
 ```
 
 `0004` requires the **pg_cron** extension (Database → Extensions). The realtime publication

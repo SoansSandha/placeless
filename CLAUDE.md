@@ -223,8 +223,10 @@ the `useGameRoom` realtime hook, RPC-backed `useRoom`, and the `supabase/migrati
 
 **Remaining tasks (in order):**
 
-1. **Apply SQL migrations** `0001 → 0002 → 0003 → 0004` in the Supabase SQL editor. `0002`
+1. **Apply SQL migrations** `0001 → 0002 → 0003 → 0004 → 0005` in the Supabase SQL editor. `0002`
    replaces RLS + re-grants column privileges — review against existing dashboard config first.
+   `0005` is the vote-lock bugfix (stale votes colliding with a new game's rounds); it was
+   applied to the live project on 2026-09-16.
 2. **Verify realtime column secrecy** — confirm a `players` subscription does not deliver
    `is_spy` (per `supabase/README.md`). This is the anti-cheat linchpin.
 3. **End-to-end playtest** — create → join → start → reveal → accuse → vote → results →
